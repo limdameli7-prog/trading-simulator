@@ -1,6 +1,11 @@
+import os
+import sys
 from flask import Flask, render_template, request, jsonify
+
+# Make sure the current directory is in the path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from trading_simulator import TradingSimulator
-import json
 
 app = Flask(__name__)
 
@@ -126,4 +131,5 @@ def get_price(symbol):
         return jsonify({'error': 'Could not fetch price'}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
